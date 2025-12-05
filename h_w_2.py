@@ -1,19 +1,34 @@
-def hanoi(n, source, target, auxiliary, steps):
-    if n == 1:
-        steps.append(f"Перемістити диск 1 з {source} на {target}")
-        return
-    hanoi(n - 1, source, auxiliary, target, steps)
-    steps.append(f"Перемістити диск {n} з {source} на {target}")
-    hanoi(n - 1, auxiliary, target, source, steps)
+import turtle
+
+def koch_line(length, level):
+    if level == 0:
+        turtle.forward(length)
+    else:
+        length /= 3
+        koch_line(length, level - 1)
+        turtle.left(60)
+        koch_line(length, level - 1)
+        turtle.right(120)
+        koch_line(length, level - 1)
+        turtle.left(60)
+        koch_line(length, level - 1)
+
+def koch_snowflake(length, level):
+    for _ in range(3):
+        koch_line(length, level)
+        turtle.right(120)
 
 def main():
-    n = int(input("Введіть кількість дисків: "))
-    steps = []
-    hanoi(n, "A", "C", "B", steps)
-    print("\n--- Послідовність переміщень ---")
-    for step in steps:
-        print(step)
-    print(f"\nЗагальна кількість кроків: {len(steps)}")
+    level = int(input("Введіть рівень рекурсії: "))
+    turtle.speed(0)
+    turtle.penup()
+    turtle.goto(-200, 100)
+    turtle.pendown()
+    koch_snowflake(400, level)
+    turtle.done()
 
 if __name__ == "__main__":
     main()
+
+
+
